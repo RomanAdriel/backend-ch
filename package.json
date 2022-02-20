@@ -1,0 +1,19 @@
+{
+  "name": "backend-ch",
+  "version": "1.0.0",
+  "description": "Desarrollo Backend de Coderhouse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomanAdriel/backend-ch.git"
+  },
+  "author": "Roman Diaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RomanAdriel/backend-ch/issues"
+  },
+  "homepage": "https://github.com/RomanAdriel/backend-ch#readme"
+}
