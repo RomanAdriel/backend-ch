@@ -4,7 +4,9 @@
   "description": "Desarrollo Backend de Coderhouse",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "express": "nodemon --inspect desafioTres.js",
+    "start": "node desafioTres.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/RomanAdriel/backend-ch/issues"
   },
-  "homepage": "https://github.com/RomanAdriel/backend-ch#readme"
+  "homepage": "https://github.com/RomanAdriel/backend-ch#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }

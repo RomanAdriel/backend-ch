@@ -25,21 +25,14 @@ class Contenedor {
         }
 
         async getById(productId) {
-            await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
-                let fileContent = JSON.parse(file);
-                let foundProduct = fileContent.find(product => product.id == productId);
-                if (typeof foundProduct === 'undefined') {
-                    console.log("The product selected has not been found!")
-                } else {
-                    console.log("The product selected is: ", foundProduct)
-                }
-            }).catch(() => console.log("The product selected has not been found!"))
+            return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then(file => JSON.parse(file)).then(file => file.find(product => product.id == productId)
+            ).catch(() => console.log("The product selected has not been found!"))
         }
-
+    
         async getAll() {
-            await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => 
-                console.log(JSON.parse(file))).catch(() => console.log("Unable to load products!"))
-    }
+            return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file => JSON.parse(file))
+            ).catch(() => console.log("Unable to load products!"))
+        }
 
         async deleteById(productId) {
             await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
@@ -54,7 +47,7 @@ class Contenedor {
         }
 }
     // Test Calls (en este orden, al ser asíncronas, van a dejar el archivo malformado. Se pueden probar de una)
-    let container = new Contenedor("productos.txt")
+/*     let container = new Contenedor("productos.txt")
     container.save({
         "title": "Prueba",
         "price": 123,
@@ -65,7 +58,8 @@ class Contenedor {
 
     container.getAll();
 
-    container.deleteById(13);
-
+    container.deleteById(13); */
     
-    container.deleteAll();
+    // container.deleteAll();
+
+  module.exports.Contenedor = Contenedor;
