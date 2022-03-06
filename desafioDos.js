@@ -7,46 +7,44 @@ class Contenedor {
     }
     async save(producto) {
         await fs.promises.access(this.nombreArchivo, fs.F_OK).then(() => {
-                console.log("File exists! Appending...");
-                fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
-                    let fileContent = JSON.parse(file);
-                    fileContent.sort(function(a, b){
-                        return a.id - b.id;
-                    });
-                    producto.id = Object.keys(fileContent).length + 1;
-                    fileContent.push(producto);
-                    fs.promises.writeFile(this.nombreArchivo, JSON.stringify(fileContent)).then(() => console.log("New product added to the 'Productos' file!")).catch(() => console.log("Failed to append new product to 'Productos' file!"))
-                })
-            }).catch(() => {
-                console.log("File does not exist! Creating...")
-                producto.id = this.id;
-                fs.promises.writeFile(this.nombreArchivo, JSON.stringify([producto])).then(() => console.log("'Productos' file created successfully!")).catch((() => console.log("Writing the new 'productos' file failed!")))
-            })
-        }
-
-        async getById(productId) {
-            return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then(file => JSON.parse(file)).then(file => file.find(product => product.id == productId)
-            ).catch(() => console.log("The product selected has not been found!"))
-        }
-    
-        async getAll() {
-            return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file => JSON.parse(file))
-            ).catch(() => console.log("Unable to load products!"))
-        }
-
-        async deleteById(productId) {
-            await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
+            console.log("File exists! Appending...");
+            fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
                 let fileContent = JSON.parse(file);
-                let filteredProducts = fileContent.filter(product => product.id != productId);
-                fs.promises.writeFile(this.nombreArchivo, JSON.stringify(filteredProducts)).then(() => console.log("Product with ID = ", productId ," successfully deleted from 'Productos' file!")).catch((() => console.log("Unable to delete the product from 'Productos' file!")))
+                fileContent.sort(function (a, b) {
+                    return a.id - b.id;
+                });
+                producto.id = Object.keys(fileContent).length + 1;
+                fileContent.push(producto);
+                fs.promises.writeFile(this.nombreArchivo, JSON.stringify(fileContent)).then(() => console.log("New product added to the 'Productos' file!")).catch(() => console.log("Failed to append new product to 'Productos' file!"))
+            })
+        }).catch(() => {
+            console.log("File does not exist! Creating...")
+            producto.id = this.id;
+            fs.promises.writeFile(this.nombreArchivo, JSON.stringify([producto])).then(() => console.log("'Productos' file created successfully!")).catch((() => console.log("Writing the new 'productos' file failed!")))
+        })
+    }
+
+    async getById(productId) {
+        return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then(file => JSON.parse(file)).then(file => file.find(product => product.id == productId)).catch(() => console.log("The product selected has not been found!"))
+    }
+
+    async getAll() {
+        return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file => JSON.parse(file))).catch(() => console.log("Unable to load products!"))
+    }
+
+    async deleteById(productId) {
+        await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
+            let fileContent = JSON.parse(file);
+            let filteredProducts = fileContent.filter(product => product.id != productId);
+            fs.promises.writeFile(this.nombreArchivo, JSON.stringify(filteredProducts)).then(() => console.log("Product with ID = ", productId, " successfully deleted from 'Productos' file!")).catch((() => console.log("Unable to delete the product from 'Productos' file!")))
         }).catch(() => console.log("Unable to read 'Productos' file!"))
     }
 
-        async deleteAll() {
-            await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([])).catch(() => console.log("Unable to clean file!"))
-        }
+    async deleteAll() {
+        await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([])).catch(() => console.log("Unable to clean file!"))
+    }
 }
-    // Test Calls (en este orden, al ser asíncronas, van a dejar el archivo malformado. Se pueden probar de una)
+// Test Calls (en este orden, al ser asíncronas, van a dejar el archivo malformado. Se pueden probar de una)
 /*     let container = new Contenedor("productos.txt")
     container.save({
         "title": "Prueba",
@@ -59,7 +57,7 @@ class Contenedor {
     container.getAll();
 
     container.deleteById(13); */
-    
-    // container.deleteAll();
 
-  module.exports.Contenedor = Contenedor;
+// container.deleteAll();
+
+module.exports.Contenedor = Contenedor;
