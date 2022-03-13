@@ -32,32 +32,49 @@ class Contenedor {
         return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file => JSON.parse(file))).catch(() => console.log("Unable to load products!"))
     }
 
+    async getLastProduct() {
+        return await fs.promises.readFile(this.nombreArchivo, 'utf-8').then(file => JSON.parse(file)).then(file => this.getById(file.length + 1)).catch(() => console.log("The product selected has not been found!"))
+    }
+
     async deleteById(productId) {
-        await fs.promises.readFile(this.nombreArchivo, 'utf-8').then((file) => {
-            let fileContent = JSON.parse(file);
-            let filteredProducts = fileContent.filter(product => product.id != productId);
-            fs.promises.writeFile(this.nombreArchivo, JSON.stringify(filteredProducts)).then(() => console.log("Product with ID = ", productId, " successfully deleted from 'Productos' file!")).catch((() => console.log("Unable to delete the product from 'Productos' file!")))
-        }).catch(() => console.log("Unable to read 'Productos' file!"))
+        let fileContent = fs.readFileSync(this.nombreArchivo, 'utf-8')
+        fileContent = JSON.parse(fileContent);
+        let productToDelete = fileContent.find(product => product.id === parseInt(productId));
+        let index = fileContent.findIndex(product => product === productToDelete);
+        if (!productToDelete) {
+            return 'Product not found'
+        }
+        fileContent.splice(index, 1);
+        fs.writeFileSync(this.nombreArchivo, JSON.stringify(fileContent))
+        console.log("Product with ID = ", productId, " successfully deleted from 'Productos' file!")
     }
 
     async deleteAll() {
         await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([])).catch(() => console.log("Unable to clean file!"))
     }
+
+    async updateById(productId, productContent) {
+        let fileContent = fs.readFileSync(this.nombreArchivo, 'utf-8')
+        fileContent = JSON.parse(fileContent);
+        let productToUpdate = fileContent.find(product => product.id == parseInt(productId));
+        let index = fileContent.findIndex(product => product === productToUpdate);
+        if (!productToUpdate) {
+            return 'Product not found'
+        }
+        let {
+            title,
+            price,
+            thumbnail
+        } = productContent;
+        productToUpdate.title = title;
+        productToUpdate.price = price;
+        productToUpdate.thumbnail = thumbnail;
+        fileContent.splice(index, 1, productToUpdate);
+        fs.writeFileSync(this.nombreArchivo, JSON.stringify(fileContent))
+        console.log("Product with ID =", productId, "successfully updated in 'Productos' file!")
+        return productToUpdate;
+
+    }
 }
-// Test Calls (en este orden, al ser asíncronas, van a dejar el archivo malformado. Se pueden probar de una)
-/*     let container = new Contenedor("productos.txt")
-    container.save({
-        "title": "Prueba",
-        "price": 123,
-        thumbnail: "url"
-    })
-
-    container.getById(23)
-
-    container.getAll();
-
-    container.deleteById(13); */
-
-// container.deleteAll();
 
 module.exports.Contenedor = Contenedor;
