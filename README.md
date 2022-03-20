@@ -4,8 +4,17 @@
 Repositorio de desafíos y proyecto final
 
 
-# Branches
+# Desafío 5 (Motores de plantillas)
 
-- `main` > proyecto final
-- `desafios` > desafios en archivos separados por número de desafío
+## Opiniones
+
+### :cupid: EJS: Muy simple de implementar. Dos vistas, un main, voilâ
+
+### :thumbsup: Handlebars: Muy parecido a EJS pero un poco más rebuscado en las definiciones y la sintaxis
+
+### :angry: PUG: Me pareció un despropósito tener que familizarse con otra sintaxis HTML y complejizó bastante la implementación
+
+### :trophy: Ganador: EJS
+
+
 

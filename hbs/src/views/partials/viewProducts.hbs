@@ -1,0 +1,22 @@
+<div class="container m-5">
+  <h1>List of Products</h1>
+  <table class="table table-dark table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Thumbnail</th>
+        </tr>
+    </thead>
+    <tbody>
+            {{#each productos}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.price}}</td>
+                    <td><img alt="thumbnail" src={{this.thumbnail}}></td>
+                </tr>
+            {{/each}}
+    </tbody>
+  </table>
+  <a href="/" class="btn btn-dark" role="button">Go back</a>
+</div>
