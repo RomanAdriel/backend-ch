@@ -1,0 +1,11 @@
+.card-container {
+  /* border: 2px solid black; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  justify-content: center;
+  gap: 4em;
+  width: 90%;
+  max-width: 1600px;
+  margin-inline: auto;
+  margin-bottom: 5em;
+}
